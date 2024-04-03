@@ -18,7 +18,7 @@ export default function Home() {
     { file: string; size: number }[]
   >([]);
   const [active, setActive] = useState(0);
-  const [config, setConfig] = useState({});
+  const [extension, setExtension] = useState(null);
 
   const { vips: Vips, cleanup } = useVips();
 
@@ -40,11 +40,21 @@ export default function Home() {
       setIsLoading(true);
       const promises = Array.from(files).map(async (file) => {
         const fileBuffer = await file.arrayBuffer();
+        console.log(file.type);
+        const currentExtension = file.type.split('/')[1];
+        const desiredExtension = extension || currentExtension;
         const buffer = await Vips.Image.newFromBuffer(fileBuffer);
         buffers.push(buffer);
-        const blob = new Blob([buffer.writeToBuffer(`.jpg`)], {
-          type: 'image/jpg',
-        });
+        const blob = new Blob(
+          [
+            buffer.writeToBuffer(`.${desiredExtension}`, {
+              Q: 1,
+            }),
+          ],
+          {
+            type: `image/${desiredExtension}`,
+          }
+        );
         const size = await blob.arrayBuffer();
 
         return { file: URL.createObjectURL(blob), size: size.byteLength };

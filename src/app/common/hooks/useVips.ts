@@ -4,14 +4,12 @@ import WASMVips from 'wasm-vips';
 export const useVips = () => {
   const [vips, setVips] = useState<typeof WASMVips | null>(null);
   const [cleanup, setCleanup] = useState<() => void>(() => () => {});
-  console.log('🚀 ~ useVips ~ cleanup:', cleanup);
 
   useEffect(() => {
     WASMVips({
       preRun: (module) => {
         module.setAutoDeleteLater(false);
         // module.setAutoDeleteLater(true);
-        console.log('module', module);
         // module.setDelayFunction((fn: () => void) => setCleanup(fn));
         // TODO: figure out how to make this work
         // module.setAutoDeleteLater(true);
