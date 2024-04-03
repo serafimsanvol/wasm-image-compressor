@@ -7,21 +7,7 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   daisyui: {
-    themes: [
-      {
-        mytheme: {
-          primary: '#00b9b5',
-          secondary: '#00ab00',
-          accent: '#00c414',
-          neutral: '#301219',
-          'base-100': '#292621',
-          info: '#00aae5',
-          success: '#00861c',
-          warning: '#ffbf1c',
-          error: '#d6003d',
-        },
-      },
-    ],
+    themes: ['dracula'],
   },
   plugins: [require('daisyui')],
 };
