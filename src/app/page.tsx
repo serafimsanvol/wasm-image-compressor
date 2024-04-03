@@ -4,9 +4,7 @@ import { ChangeEventHandler, useState } from 'react';
 import DropArea from './components/DropArea';
 import Preview from './components/Preview';
 import Carousel from './components/Carousel';
-import CompareSlider from './components/CompareSlider';
 import Config from './components/Config';
-import CompressionStats from './components/CompressionStats';
 import { useVips } from './common/hooks/useVips';
 import Result from './components/Result';
 
