@@ -7,6 +7,7 @@ import Carousel from './components/Carousel';
 import Config from './components/Config';
 import { useVips } from './common/hooks/useVips';
 import Result from './components/Result';
+import { useForm } from 'react-hook-form';
 
 export default function Home() {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -17,6 +18,11 @@ export default function Home() {
   >([]);
   const [active, setActive] = useState(0);
   const [extension, setExtension] = useState(null);
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      Q: 80,
+    },
+  });
 
   const { vips: Vips, cleanup } = useVips();
 
@@ -31,7 +37,8 @@ export default function Home() {
     setResultImages([]);
   };
 
-  const compressImages = async () => {
+  const compressImages = async (params: any) => {
+    console.log('data', params);
     if (!files || !Vips) return;
     const buffers: any[] = [];
     try {
@@ -44,11 +51,7 @@ export default function Home() {
         const buffer = await Vips.Image.newFromBuffer(fileBuffer);
         buffers.push(buffer);
         const blob = new Blob(
-          [
-            buffer.writeToBuffer(`.${desiredExtension}`, {
-              Q: 1,
-            }),
-          ],
+          [buffer.writeToBuffer(`.${desiredExtension}`, { ...params })],
           {
             type: `image/${desiredExtension}`,
           }
@@ -102,14 +105,25 @@ export default function Home() {
                     active={active}
                   />
                 ) : (
-                  <>
+                  <form onSubmit={handleSubmit(compressImages)}>
                     <Preview image={previews[active]} />
-                    <Config options={{}} extension="jpg" />
+                    <p className="text-center mb-2">Quality</p>
+                    <input
+                      type="range"
+                      {...register('Q')}
+                      min={1}
+                      max={100}
+                      className="range range-lg"
+                    />
+                    <div className="w-full mb-2 flex justify-between text-xs px-2">
+                      <span>Lowest</span>
+                      <span>Highest</span>
+                    </div>
                     <div className="flex justify-center">
                       <button
                         disabled={isLoading}
                         type="submit"
-                        onClick={compressImages}
+                        onClick={handleSubmit(compressImages)}
                         className="btn w-full btn-primary"
                       >
                         {isLoading ? (
@@ -119,7 +133,7 @@ export default function Home() {
                         )}
                       </button>
                     </div>
-                  </>
+                  </form>
                 )}
                 <button
                   onClick={reset}
