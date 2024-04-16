@@ -87,7 +87,7 @@ export default function Home() {
   };
 
   return (
-    <main className="px-4 flex min-h-screen flex-col my-10">
+    <main className="px-4 flex min-h-[80vh] flex-col my-10 mb-0">
       {!files?.length ? (
         <DropArea onChange={onDropAreaChange} />
       ) : (
