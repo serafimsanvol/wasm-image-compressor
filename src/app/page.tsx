@@ -17,7 +17,6 @@ export default function Home() {
     { file: string; size: number }[]
   >([]);
   const [active, setActive] = useState(0);
-  const [extension, setExtension] = useState(null);
   const { register, handleSubmit } = useForm({
     defaultValues: {
       Q: 80,
@@ -38,7 +37,6 @@ export default function Home() {
   };
 
   const compressImages = async (params: any) => {
-    console.log('data', params);
     if (!files || !Vips) return;
     const buffers: any[] = [];
     try {
@@ -47,11 +45,11 @@ export default function Home() {
         const fileBuffer = await file.arrayBuffer();
         console.log(file.type);
         const currentExtension = file.type.split('/')[1];
-        const desiredExtension = extension || currentExtension;
+        const desiredExtension = currentExtension;
         const buffer = await Vips.Image.newFromBuffer(fileBuffer);
         buffers.push(buffer);
         const blob = new Blob(
-          [buffer.writeToBuffer(`.${desiredExtension}`, { ...params })],
+          [buffer.writeToBuffer(`.${desiredExtension}`, params)],
           {
             type: `image/${desiredExtension}`,
           }

@@ -5,13 +5,8 @@ import {
   SaveExtensionFormatsType,
 } from './constants';
 
-const Config = ({
-  extension,
-  options,
-}: {
-  extension: SaveExtensionFormatsType;
-  options: SaveBufferOptions;
-}) => {
+const Config = ({ extension }: { extension: SaveExtensionFormatsType }) => {
+  const options = {} as SaveBufferOptions;
   const isLossless = options && 'lossless' in options;
 
   return (
