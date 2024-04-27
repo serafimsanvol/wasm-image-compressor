@@ -15,6 +15,7 @@
     "react-compare-slider": "^3.0.1",
     "react-dom": "^18",
     "react-hook-form": "7.51.3",
+    "tailwindcss-animated": "1.0.1",
     "wasm-vips": "0.0.6"
   },
   "devDependencies": {
