@@ -27,7 +27,7 @@ const DropArea = ({
         accept="image/png, image/jpeg, image/webp"
         multiple
       />
-      <p className="">Drop your file here</p>
+      <p className="text-white">Drop your file here</p>
     </label>
   );
 };

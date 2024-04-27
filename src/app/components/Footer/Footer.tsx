@@ -7,11 +7,11 @@ export default function Footer() {
         A project by{' '}
         <a
           className="font-semibold underline-offset-4 transition-colors hover:underline text-primary"
-          href="https://github.com/serafimsanvol"
+          href="https://yusyp.dev"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Andrii Yusyp
+          yusyp.dev
         </a>
       </p>
       <div>

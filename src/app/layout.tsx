@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Lato } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
 import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
 
-const inter = Inter({ subsets: ['latin'] });
+const lato = Lato({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
   title: 'Free image compressor',
@@ -18,7 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto max-w-7xl`}>
+      <body className={`${lato.className} mx-auto max-w-7xl`}>
+        <Header />
         {children}
         <Footer />
       </body>
