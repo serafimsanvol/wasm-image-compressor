@@ -1,9 +1,11 @@
 const withPWA = require('next-pwa')({
   dest: 'public',
+  cacheStartUrl: true,
+  cacheOnFrontEndNav: true,
   runtimeCaching: [
     {
       handler: 'CacheOnly',
-      urlPattern: /./i,
+      urlPattern: /.*/i,
     },
   ],
 });
