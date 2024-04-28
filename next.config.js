@@ -1,3 +1,13 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  runtimeCaching: [
+    {
+      handler: 'CacheOnly',
+      urlPattern: /./i,
+    },
+  ],
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
@@ -26,4 +36,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);
