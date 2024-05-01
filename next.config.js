@@ -1,9 +1,10 @@
-const withPWA = require('next-pwa')({
+const withPWA = require('@ducanh2912/next-pwa').default({
   register: true,
   skipWaiting: true,
   dest: 'public',
   cacheStartUrl: true,
   cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
   runtimeCaching: [
     {
       handler: 'CacheOnly',
