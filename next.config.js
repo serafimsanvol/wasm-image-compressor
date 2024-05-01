@@ -1,4 +1,6 @@
 const withPWA = require('next-pwa')({
+  register: true,
+  skipWaiting: true,
   dest: 'public',
   cacheStartUrl: true,
   cacheOnFrontEndNav: true,
