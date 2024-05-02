@@ -7,6 +7,7 @@ const DropArea = ({
 }) => {
   return (
     <label
+      data-animate
       htmlFor="fileInput"
       className="flex cursor-pointer w-full mx-auto justify-center items-center min-h-[80vh] max-w-[80vw] bg-primary card shadow-xl"
     >

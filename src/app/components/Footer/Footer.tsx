@@ -2,7 +2,10 @@ import { BuyMeACoffee } from '@/app/common/icons/BuyMeACoffee';
 
 export default function Footer() {
   return (
-    <div className="mt-4 mb-4 flex w-full flex-col items-center justify-center text-center md:flex-row">
+    <footer
+      data-animate
+      className="mt-4 mb-4 flex w-full flex-col items-center justify-center text-center md:flex-row"
+    >
       <p className="mr-4">
         A project by{' '}
         <a
@@ -25,6 +28,6 @@ export default function Footer() {
           <p className="font-medium text-gray-600">Buy me a coffee</p>
         </a>
       </div>
-    </div>
+    </footer>
   );
 }
