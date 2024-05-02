@@ -37,5 +37,6 @@ next-env.d.ts
 
 
 public/sw.*
+public/sw.js*
 public/workbox-*
 swe-worker-devel*
