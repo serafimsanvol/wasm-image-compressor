@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import Profile from './Profile/Profile';
 
 const Header = () => {
   return (
@@ -7,7 +8,7 @@ const Header = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col my-2 px-2">
         {/* Navbar */}
-        <div className="w-full navbar border-gray-400 shadow-xl rounded-full">
+        <div className="w-full navbar px-6 border-gray-400 shadow-xl rounded-full">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -47,6 +48,7 @@ const Header = () => {
               </li>
             </ul>
           </div>
+          <Profile />
         </div>
       </div>
       <div className="drawer-side">

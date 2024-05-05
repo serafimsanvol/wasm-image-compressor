@@ -1,5 +1,6 @@
 const withPWA = require('@ducanh2912/next-pwa').default({
-  register: true,
+  disable: process.env.NODE_ENV === 'development',
+  register: process.env.NODE_ENV === 'development',
   skipWaiting: true,
   dest: 'public',
   cacheStartUrl: true,
@@ -32,10 +33,20 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+      },
+    ],
+  },
   webpack: (config) => {
+    // Alternatively, to bundle the CommonJS module:
     // Ensure "require" has a higher priority when matching export conditions.
     // https://webpack.js.org/configuration/resolve/#resolveconditionnames
-    config.resolve.conditionNames = ['require'];
+    config.resolve.conditionNames = ['require', 'import'];
 
     return config;
   },

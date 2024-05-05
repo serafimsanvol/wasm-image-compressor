@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 import Script from 'next/script';
 import Footer from './components/Footer/Footer';
@@ -19,11 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lato.className} mx-auto max-w-7xl`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <ClerkProvider>
+        <body className={`${lato.className} mx-auto max-w-7xl`}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </ClerkProvider>
       {/* some incredible bug https://github.com/microsoft/clarity/issues/247#issuecomment-1259421430 */}
       <Script id="ms-clarity">
         {`(function(c,l,a,r,i,t,y){

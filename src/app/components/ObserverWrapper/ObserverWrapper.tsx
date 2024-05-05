@@ -7,7 +7,6 @@ const ObserverWrapper = () => {
       'animate-once',
       'animate-ease-linear',
       'animate-fade-up',
-      'animate-delay-500',
     ];
     const observer = new IntersectionObserver(
       (entries) => {
