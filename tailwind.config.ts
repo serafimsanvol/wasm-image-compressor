@@ -9,6 +9,10 @@ const config: Config = {
   daisyui: {
     themes: ['light', 'dracula'],
   },
-  plugins: [require('daisyui'), require('tailwindcss-animated')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui'),
+    require('tailwindcss-animated'),
+  ],
 };
 export default config;
