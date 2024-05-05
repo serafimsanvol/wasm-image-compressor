@@ -17,7 +17,6 @@ const ObserverWrapper = () => {
           ) {
             entry.target.classList.add(...basicAnimation);
           }
-          console.log(entry);
         });
       },
       {
@@ -25,7 +24,6 @@ const ObserverWrapper = () => {
       }
     );
     document.querySelectorAll('[data-animate]').forEach((item) => {
-      console.log(item);
       observer.observe(item);
     });
   });

@@ -27,8 +27,6 @@ export const useVips = () => {
       vips.config();
       console.log('wasm-vips version:', vips.version());
       console.log('emscripten version:', vips.emscriptenVersion());
-      console.log('🚀 ~ useEffect ~ vips.concurrency():', vips.concurrency());
-      console.log('🚀 ~ useEffect ~ vips.config():', vips.config());
     });
   }, []);
 
