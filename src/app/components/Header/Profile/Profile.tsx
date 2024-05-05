@@ -21,7 +21,7 @@ const Profile = async () => {
             className="rounded-full"
             width={40}
             height={40}
-            src={session?.user?.image}
+            src={session?.user?.image || '/avatar.png'}
           />
         </div>
       </div>
