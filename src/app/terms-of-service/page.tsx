@@ -1,6 +1,6 @@
 const Page = () => {
   return (
-    <div>
+    <div className="prose mx-auto my-16">
       <h1>Website Terms and Conditions of Use</h1>
 
       <h2>1. Terms</h2>

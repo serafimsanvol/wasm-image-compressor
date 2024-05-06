@@ -1,12 +1,17 @@
-import { BuyMeACoffee } from '@/app/common/icons/BuyMeACoffee';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer
-      data-animate
-      className="mt-4 mb-4 flex w-full flex-col items-center justify-center text-center md:flex-row"
-    >
-      <p className="mr-4">
+    <footer data-animate className="mt-4 footer footer-center gap-4">
+      <nav className="grid grid-flow-col">
+        <Link className="link link-hover" href={'/terms-of-service'}>
+          Terms of Service
+        </Link>
+        <Link className="link link-hover" href={'/privacy'}>
+          Privacy policy
+        </Link>
+      </nav>
+      <p className="flex mb-4">
         A project by{' '}
         <a
           className="font-semibold underline-offset-4 transition-colors hover:underline text-primary"
@@ -17,17 +22,6 @@ export default function Footer() {
           yusyp.dev
         </a>
       </p>
-      <div>
-        <a
-          href="https://www.buymeacoffee.com/serafimsanvol"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-auto  mt-2 flex max-w-fit items-center justify-center space-x-2 rounded-lg border border-gray-200 bg-white px-6 py-2 transition-all duration-75 hover:scale-105"
-        >
-          <BuyMeACoffee className="h-6 w-6" />
-          <p className="font-medium text-gray-600">Buy me a coffee</p>
-        </a>
-      </div>
     </footer>
   );
 }
