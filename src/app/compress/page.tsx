@@ -8,6 +8,7 @@ import Config from '../components/Config';
 import { useVips } from '../common/hooks/useVips';
 import Result from '../components/Result';
 import { useForm } from 'react-hook-form';
+import { getParamsByExtension } from './helpers';
 
 export default function Home() {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -19,7 +20,7 @@ export default function Home() {
   const [active, setActive] = useState(0);
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      Q: 80,
+      Q: 75,
     },
   });
 
@@ -36,6 +37,13 @@ export default function Home() {
     setResultImages([]);
   };
 
+  const resetResult = () => {
+    resultImages.forEach((resultImage) =>
+      URL.revokeObjectURL(resultImage.file)
+    );
+    setResultImages([]);
+  };
+
   const compressImages = async (params: any) => {
     if (!files || !Vips) return;
     const buffers: any[] = [];
@@ -43,13 +51,20 @@ export default function Home() {
       setIsLoading(true);
       const promises = Array.from(files).map(async (file) => {
         const fileBuffer = await file.arrayBuffer();
-        console.log(file.type);
         const currentExtension = file.type.split('/')[1];
         const desiredExtension = currentExtension;
         const buffer = await Vips.Image.newFromBuffer(fileBuffer);
         buffers.push(buffer);
+        params.Q = +params.Q;
+        const defaultParams = getParamsByExtension(desiredExtension);
         const blob = new Blob(
-          [buffer.writeToBuffer(`.${desiredExtension}`, params)],
+          [
+            buffer.writeToBuffer(`.${desiredExtension}`, {
+              ...params,
+              ...defaultParams,
+              keep: 'none',
+            }),
+          ],
           {
             type: `image/${desiredExtension}`,
           }
@@ -93,7 +108,7 @@ export default function Home() {
           <div>
             <div className="mb-4">
               <p className="text-center mb-2">Before / After</p>
-              <div className="max-w-[80vh] mx-auto">
+              <div className="mx-auto">
                 {resultImages.length ? (
                   <Result
                     previews={previews}
@@ -133,6 +148,12 @@ export default function Home() {
                     </div>
                   </form>
                 )}
+                <button
+                  onClick={resetResult}
+                  className="btn mt-2 w-full mb-4 btn-neutral"
+                >
+                  Reset result
+                </button>
                 <button
                   onClick={reset}
                   className="btn mt-2 w-full mb-4 btn-warning"

@@ -10,9 +10,13 @@ const CompareSlider = ({
 }) => {
   return (
     <Slider.ReactCompareSlider
-      className="w-full max-w-md mx-auto h-auto"
+      className="w-full max-h-[70vh] mx-auto"
       itemOne={
-        <Slider.ReactCompareSliderImage src={firstImage} alt="Image one" />
+        <Slider.ReactCompareSliderImage
+          className="max-h-[70vh]"
+          src={firstImage}
+          alt="Image one"
+        />
       }
       itemTwo={
         <Slider.ReactCompareSliderImage src={secondImage} alt="Image two" />
