@@ -121,6 +121,10 @@ export default function Home() {
                   <form onSubmit={handleSubmit(compressImages)}>
                     <Preview image={previews[active]} />
                     <p className="text-center mb-2">Quality</p>
+                    <p className="text-center mb-2 text-sm">
+                      Please note that if you&apos;re going above recommended
+                      parameter output image can be bigger than input
+                    </p>
                     <input
                       type="range"
                       {...register('Q')}
@@ -128,9 +132,12 @@ export default function Home() {
                       max={100}
                       className="range range-lg"
                     />
-                    <div className="w-full mb-2 flex justify-between text-xs px-2">
-                      <span>Lowest</span>
-                      <span>Highest</span>
+                    <div className="flex w-full justify-between px-2 text-xs mb-2">
+                      <span>1%</span>
+                      <span>25%</span>
+                      <span>50%</span>
+                      <span>75%</span>
+                      <span>100%</span>
                     </div>
                     <div className="flex justify-center">
                       <button
