@@ -4,10 +4,10 @@ export default function Footer() {
   return (
     <footer data-animate className="mt-4 footer footer-center gap-4">
       <nav className="grid grid-flow-col">
-        <Link className="link link-hover" href={'/terms-of-service'}>
+        <Link className="link link-hover" href="/terms-of-service">
           Terms of Service
         </Link>
-        <Link className="link link-hover" href={'/privacy'}>
+        <Link className="link link-hover" href="/privacy">
           Privacy policy
         </Link>
       </nav>

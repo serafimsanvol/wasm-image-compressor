@@ -1,12 +1,23 @@
 import Link from 'next/link';
 import Features from './components/Features/Features';
 import ObserverWrapper from './components/ObserverWrapper/ObserverWrapper';
+import Image from 'next/image';
 
 const Page = () => {
   return (
     <main className="bg-white">
-      <div data-animate className="relative isolate px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+      <div
+        data-animate
+        className="relative isolate px-6 lg:px-8 flex min-h-screen"
+      >
+        <div className="py-16 flex md:flex-row items-center flex-col">
+          <Image
+            width={400}
+            height={400}
+            alt="site logo"
+            src="/logo.svg"
+            className="mr-2"
+          />
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Compress your images with ease on your device

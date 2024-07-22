@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import Profile from './Profile/Profile';
 
 const Header = () => {
   return (
@@ -31,8 +31,15 @@ const Header = () => {
             </label>
           </div>
           <div className="flex-1 px-2 mx-2">
-            <Link href="/" className="text-xl font-bold">
-              Image compressor
+            <Link href="/" className="text-xl font-bold flex items-center">
+              <Image
+                width={60}
+                height={60}
+                alt="site logo"
+                src="/logo.svg"
+                className="mr-2"
+              />
+              <p>Image compressor</p>
             </Link>
           </div>
           <div className="flex-none hidden lg:block">
@@ -48,7 +55,6 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          <Profile />
         </div>
       </div>
       <div className="drawer-side">
@@ -58,7 +64,6 @@ const Header = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200">
-          {/* Sidebar content here */}
           <li>
             <a>Compress</a>
           </li>
