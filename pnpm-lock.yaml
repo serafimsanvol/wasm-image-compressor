@@ -73,6 +73,9 @@ devDependencies:
   typescript:
     specifier: ^5
     version: 5.4.3
+  wasm-vips:
+    specifier: 0.0.9
+    version: 0.0.9
 
 packages:
 
@@ -5025,6 +5028,11 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  /wasm-vips@0.0.9:
+    resolution: {integrity: sha512-6ljaCFNxE6mUqVQM/y/OoNLSCh0+KHP5h78L9xbgAMoXjRoy188E4m7ZVUlkO4sMjVnDtcsc1CNPJONtOvzlOA==}
+    engines: {node: '>=16.4.0'}
+    dev: true
 
   /watchpack@2.4.1:
     resolution: {integrity: sha512-8wrBCMtVhqcXP2Sup1ctSkga6uc2Bx0IIvKyT7yTFier5AXHooSI+QyQQAtTb7+E0IUCCKyTFmXqdqgum2XWGg==}
