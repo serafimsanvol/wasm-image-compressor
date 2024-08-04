@@ -41,7 +41,6 @@ self.onmessage = async (event) => {
   const writtenBuffer = buffer.writeToBuffer(`.${desiredExtension}`, {
     ...params,
     ...defaultParams,
-    effort: 10,
     keep: 'none',
   });
 
