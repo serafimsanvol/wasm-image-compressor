@@ -13,6 +13,16 @@ export const getParamsByExtension = (extension: string) => {
         trellis_quant: true,
         quant_table: 3,
       };
+    case 'gif':
+      return {
+        // dither: 1,
+        // use instead of quality
+        // interframe_maxerror: 32.0,
+        // interpalette_maxerror: 32.0,
+        interframe_maxerror: 8.0,
+        reuse: true,
+        interlace: true,
+      };
     default:
       return {};
   }

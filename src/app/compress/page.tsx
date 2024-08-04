@@ -1,11 +1,15 @@
 'use client';
-import { ChangeEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import DropArea from '../components/DropArea';
 import Preview from '../components/Preview';
 import Carousel from '../components/Carousel';
-import Config from '../components/Config';
-import { useVips } from '../common/hooks/useVips';
 import Result from '../components/Result';
 import { useForm } from 'react-hook-form';
 import { getParamsByExtension } from './helpers';
@@ -24,7 +28,26 @@ export default function Home() {
     },
   });
 
-  const { vips: Vips, cleanup } = useVips();
+  const workerRef: MutableRefObject<null | Worker> = useRef(null);
+
+  useEffect(() => {
+    workerRef.current = new Worker('/vips.custom.worker.js', {
+      type: 'module',
+    });
+
+    workerRef.current.onmessage = (event) => {
+      if (resultImages.length + 1 === files?.length) {
+        setIsLoading(false);
+      }
+      setResultImages([...resultImages, event.data]);
+    };
+
+    return () => {
+      workerRef?.current?.terminate();
+    };
+  }, []);
+
+  const cleanup = () => null;
 
   const reset = () => {
     cleanup();
@@ -35,6 +58,7 @@ export default function Home() {
     setFiles(null);
     setPreviews([]);
     setResultImages([]);
+    setIsLoading(false);
   };
 
   const resetResult = () => {
@@ -42,53 +66,20 @@ export default function Home() {
       URL.revokeObjectURL(resultImage.file)
     );
     setResultImages([]);
+    setIsLoading(false);
   };
 
   const compressImages = async (params: any) => {
-    if (!files || !Vips) return;
-    const buffers: any[] = [];
-    try {
-      setIsLoading(true);
-      const promises = Array.from(files).map(async (file) => {
-        const fileBuffer = await file.arrayBuffer();
-        const currentExtension = file.type.split('/')[1];
-        const desiredExtension = currentExtension;
-        const buffer = await Vips.Image.newFromBuffer(fileBuffer);
-        buffers.push(buffer);
-        params.Q = +params.Q;
-        const defaultParams = getParamsByExtension(desiredExtension);
-        const blob = new Blob(
-          [
-            buffer.writeToBuffer(`.${desiredExtension}`, {
-              ...params,
-              ...defaultParams,
-              keep: 'none',
-            }),
-          ],
-          {
-            type: `image/${desiredExtension}`,
-          }
-        );
-        const size = await blob.arrayBuffer();
+    if (!files) return;
 
-        return { file: URL.createObjectURL(blob), size: size.byteLength };
-      });
-
-      const result = await Promise.all(promises);
-      setResultImages(result);
-    } catch (e) {
-      console.error('execution error:', e);
-    } finally {
-      console.log('post executionStats:', {
-        allocations: Vips.Stats.allocations(),
-        files: Vips.Stats.files(),
-        mem: Vips.Stats.mem(),
-        memHighwater: Vips.Stats.memHighwater(),
-      });
-      buffers.forEach((buffer) => buffer.delete());
-      setIsLoading(false);
-      cleanup();
-    }
+    setIsLoading(true);
+    Array.from(files).map((file) => {
+      const currentExtension = file.type.split('/')[1];
+      const desiredExtension = currentExtension;
+      const defaultParams = getParamsByExtension(desiredExtension);
+      if (!workerRef.current) return;
+      workerRef.current?.postMessage({ file, params, defaultParams });
+    });
   };
 
   const onDropAreaChange: ChangeEventHandler<HTMLInputElement> = (e) => {

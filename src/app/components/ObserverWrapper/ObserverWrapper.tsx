@@ -27,7 +27,7 @@ const ObserverWrapper = () => {
     document.querySelectorAll('[data-animate]').forEach((item) => {
       observer.observe(item);
     });
-  });
+  }, []);
 
   return null;
 };

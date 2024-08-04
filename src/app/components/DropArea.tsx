@@ -25,7 +25,7 @@ const DropArea = ({
         id="fileInput"
         type="file"
         // test on playground
-        accept="image/png, image/jpeg, image/webp"
+        accept="image/png, image/jpeg, image/webp, image/gif"
         multiple
       />
       <p className="text-white">Drop your file here</p>
