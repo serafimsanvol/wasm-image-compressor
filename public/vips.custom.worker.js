@@ -4,6 +4,7 @@ let Vips = null;
 
 WASMVips({
   preRun: (module) => {
+    module.ENV.VIPS_INFO = 1;
     module.setAutoDeleteLater(false);
     // TODO: figure out how to make this work
     // module.setAutoDeleteLater(true);
@@ -14,6 +15,7 @@ WASMVips({
   vips.emscriptenVersion();
   vips.Cache.max(10);
   vips.config();
+  vips.concurrency(1);
   console.log('wasm-vips version:', vips.version());
   console.log('emscripten version:', vips.emscriptenVersion());
   console.log('concurrency:', vips.concurrency());
