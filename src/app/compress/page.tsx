@@ -5,6 +5,7 @@ import {
   useEffect,
   useRef,
   useState,
+  DragEventHandler,
 } from 'react';
 
 import DropArea from '../components/DropArea';
@@ -83,10 +84,20 @@ export default function Home() {
     setPreviews(previews);
   };
 
+  const onDrop: DragEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!e.dataTransfer.files?.length) return;
+    const files = e.dataTransfer.files;
+    setFiles(files);
+    const previews = Array.from(files).map((file) => URL.createObjectURL(file));
+    setPreviews(previews);
+  };
+
   return (
     <main className="px-4 flex min-h-[80vh] flex-col my-10 mb-0">
       {!files?.length ? (
-        <DropArea onChange={onDropAreaChange} />
+        <DropArea onDrop={onDrop} onChange={onDropAreaChange} />
       ) : (
         <>
           <div>
