@@ -12,7 +12,6 @@ import Preview from '../components/Preview';
 import Carousel from '../components/Carousel';
 import Result from '../components/Result';
 import { useForm } from 'react-hook-form';
-import { getParamsByExtension } from './helpers';
 
 export default function Home() {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -36,10 +35,8 @@ export default function Home() {
     });
 
     workerRef.current.onmessage = (event) => {
-      if (resultImages.length + 1 === files?.length) {
-        setIsLoading(false);
-      }
-      setResultImages([...resultImages, event.data]);
+      setIsLoading(false);
+      setResultImages([...event.data]);
     };
 
     return () => {
@@ -73,13 +70,9 @@ export default function Home() {
     if (!files) return;
 
     setIsLoading(true);
-    Array.from(files).map((file) => {
-      const currentExtension = file.type.split('/')[1];
-      const desiredExtension = currentExtension;
-      const defaultParams = getParamsByExtension(desiredExtension);
-      if (!workerRef.current) return;
-      workerRef.current?.postMessage({ file, params, defaultParams });
-    });
+
+    if (!workerRef.current) return;
+    workerRef.current?.postMessage({ files, params });
   };
 
   const onDropAreaChange: ChangeEventHandler<HTMLInputElement> = (e) => {
