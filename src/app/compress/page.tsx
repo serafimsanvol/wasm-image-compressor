@@ -45,7 +45,7 @@ export default function Home() {
       } else if (eventName === WorkerEvents.Compress) {
         setIsLoading(false);
         setProgress(0);
-        setResultImages([...event.data]);
+        setResultImages([...event.data.files]);
       } else {
         console.error('unexpected event type');
       }

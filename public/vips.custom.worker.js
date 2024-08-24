@@ -100,10 +100,12 @@ self.onmessage = async (event) => {
       return {
         file: URL.createObjectURL(blob),
         size: blob.size,
-        event: 'compress',
       };
     })
   );
 
-  postMessage(compressedFiles);
+  postMessage({
+    event: 'compress',
+    files: compressedFiles,
+  });
 };
