@@ -65,7 +65,12 @@ const Header = () => {
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200">
           <li>
-            <a>Compress</a>
+            <Link
+              className="btn btn-link no-underline btn-accent border-none"
+              href="/compress"
+            >
+              Compress
+            </Link>
           </li>
         </ul>
       </div>

@@ -21,14 +21,14 @@ const Result = ({
         firstImage={previews[active]}
         secondImage={resultImages[active].file}
       />
-      <div className="text-center mt-4 mb-4">
+      <div className="text-center mt-4">
         <CompressionStats
           before={files[active].size}
           after={resultImages[active].size}
         />
       </div>
       <a
-        className="block mb-4"
+        className="block"
         download={files[active].name}
         href={resultImages[active].file}
       >

@@ -13,11 +13,13 @@ import Preview from '../components/Preview';
 import Carousel from '../components/Carousel';
 import Result from '../components/Result';
 import { useForm } from 'react-hook-form';
+import { WorkerEvents } from './constants';
 
 export default function Home() {
   const [files, setFiles] = useState<FileList | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [previews, setPreviews] = useState<string[]>([]);
+  const [progress, setProgress] = useState<number>(0);
   const [resultImages, setResultImages] = useState<
     { file: string; size: number }[]
   >([]);
@@ -36,8 +38,17 @@ export default function Home() {
     });
 
     workerRef.current.onmessage = (event) => {
-      setIsLoading(false);
-      setResultImages([...event.data]);
+      const eventName = event.data.event;
+      if (eventName === WorkerEvents.Progress) {
+        setProgress(event.data.progress);
+        return;
+      } else if (eventName === WorkerEvents.Compress) {
+        setIsLoading(false);
+        setProgress(0);
+        setResultImages([...event.data]);
+      } else {
+        console.error('unexpected event type');
+      }
     };
 
     return () => {
@@ -57,6 +68,7 @@ export default function Home() {
     setPreviews([]);
     setResultImages([]);
     setIsLoading(false);
+    setProgress(0);
   };
 
   const resetResult = () => {
@@ -65,6 +77,7 @@ export default function Home() {
     );
     setResultImages([]);
     setIsLoading(false);
+    setProgress(0);
   };
 
   const compressImages = async (params: any) => {
@@ -124,8 +137,12 @@ export default function Home() {
                       type="range"
                       {...register('Q')}
                       min={1}
+                      disabled={isLoading}
                       max={100}
-                      className="range range-lg"
+                      // ugh ugly
+                      className={`range range-lg ${
+                        isLoading && 'bg-neutral-content'
+                      }`}
                     />
                     <div className="flex w-full justify-between px-2 text-xs mb-2">
                       <span>1%</span>
@@ -134,6 +151,13 @@ export default function Home() {
                       <span>75%</span>
                       <span>100%</span>
                     </div>
+                    <progress
+                      className={`progress progress-success w-full h-8 ${
+                        !isLoading && 'invisible'
+                      }`}
+                      value={progress}
+                      max="100"
+                    ></progress>
                     <div className="flex justify-center">
                       <button
                         disabled={isLoading}
@@ -152,7 +176,7 @@ export default function Home() {
                 )}
                 <button
                   onClick={resetResult}
-                  className="btn mt-2 w-full mb-4 btn-neutral"
+                  className="btn mt-2 w-full btn-neutral"
                 >
                   Reset result
                 </button>

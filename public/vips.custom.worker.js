@@ -53,7 +53,6 @@ WASMVips({
 });
 
 self.onmessage = async (event) => {
-  console.log('🚀 ~ self.onmessage= ~ event:', event);
   const { files, params } = event.data;
   const compressedFiles = await Promise.all(
     Array.from(files).map(async (file) => {
@@ -75,6 +74,9 @@ self.onmessage = async (event) => {
       }
 
       const bl0 = performance.now();
+      // TODO not quite working as expected, found out why
+      buffer.onProgress = (percent) =>
+        postMessage({ event: 'progress', progress: percent });
       const writtenBuffer = buffer.writeToBuffer(`.${desiredExtension}`, {
         ...params,
         ...defaultParams,
@@ -88,8 +90,6 @@ self.onmessage = async (event) => {
         type: `image/${desiredExtension}`,
       });
 
-      const size = await blob.arrayBuffer();
-
       console.log('post executionStats:', {
         allocations: Vips.Stats.allocations(),
         files: Vips.Stats.files(),
@@ -97,7 +97,11 @@ self.onmessage = async (event) => {
         memHighwater: Vips.Stats.memHighwater(),
       });
 
-      return { file: URL.createObjectURL(blob), size: size.byteLength };
+      return {
+        file: URL.createObjectURL(blob),
+        size: blob.size,
+        event: 'compress',
+      };
     })
   );
 
